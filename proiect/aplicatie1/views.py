@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import CreateView, ListView, UpdateView
@@ -6,7 +7,7 @@ from aplicatie1.models import Location
 
 
 # Create your views here.
-class CreateLocationView(CreateView):
+class CreateLocationView(LoginRequiredMixin, CreateView):
     model = Location
     fields = ['city' , 'country']
     template_name = 'aplicatie1/location_form.html'
@@ -15,7 +16,7 @@ class CreateLocationView(CreateView):
         return reverse('aplicatie1:lista_locatii')
 
 
-class UpdateLocationView(UpdateView):
+class UpdateLocationView(LoginRequiredMixin, UpdateView):
     model = Location
     fields = ['city', 'country']
     # fields = '__all__'
@@ -25,6 +26,6 @@ class UpdateLocationView(UpdateView):
         return reverse('aplicatie1:lista_locatii')
 
 
-class LocationView(ListView):
+class LocationView(LoginRequiredMixin, ListView):
     model = Location
     template_name = 'aplicatie1/location_index.html'
